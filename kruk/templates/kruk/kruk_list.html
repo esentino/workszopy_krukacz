@@ -15,4 +15,7 @@ Dzień dobry
     </tr>
 {% endfor %}
 </table>
+{% if user.is_authenticated %}
+<a href="{% url 'add-kruk' %}">Nowe kruknięcie :)</a>
+{% endif %}
 {% endblock %}
