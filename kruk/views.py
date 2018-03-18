@@ -11,6 +11,8 @@ from .models import Kruk
 
 class RegisterView(CreateView):
     form_class = UserCreationForm
+    template_name = 'registration/register.html'
+    success_url = reverse_lazy('login')
 
 
 class MainView(View):
@@ -23,11 +25,13 @@ class MainView(View):
 
 
 class MainInaczej(ListView):
+    """Widok listy z użyciem ListView"""
     model = Kruk
     ordering = ['-creation_date']
 
 
 class KrukView(DetailView):
+    """Widok szczegółowy tweeta"""
     model = Kruk
 
 

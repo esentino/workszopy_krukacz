@@ -7,6 +7,18 @@
 </head>
 <body>
 <div class="container">
+    <div class="row"/>
+        <div class="col-6">
+            {% if user.is_authenticated %}
+            <p>Zalogowany jako: {{ user.username }}</p>
+            <p><a href="{% url 'logout' %}">Wyloguj mi się</a></p>
+            {% else %}
+            <p>Jesteś niezalogany</p>
+            <p><a href="{% url 'login' %}">Zaloguj się</a></p>
+            <p><a href="{% url 'register' %}">Załóż konto</a></p>
+            {% endif %}
+        </div>
+    </div>
 {% block content %}
 Kru Kru Kru
 {% endblock %}
