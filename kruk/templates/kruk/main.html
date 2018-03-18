@@ -1,0 +1,18 @@
+{% extends 'kruk/base.html' %}
+{% block content %}
+Dzień dobry
+<table>
+    <thead>
+    <th>Treść</th>
+    <th>Author</th>
+    <th>Kiedy</th>
+    </thead>
+{% for kruk in kruki %}
+    <tr>
+        <td>{{ kruk.content }}</td>
+        <td>{{ kruk.krukacz.username }}</td>
+        <td>{{ kruk.creation_date }}</td>
+    </tr>
+{% endfor %}
+</table>
+{% endblock %}
