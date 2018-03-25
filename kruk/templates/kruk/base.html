@@ -8,20 +8,22 @@
 <body>
 <div class="container">
     <div class="row"/>
-        <div class="col-6">
+        <div class="col-6 offset-6">
             {% if user.is_authenticated %}
-            <p>Zalogowany jako: {{ user.username }}</p>
-            <p><a href="{% url 'logout' %}">Wyloguj mi się</a></p>
+            <span>Zalogowany jako: {{ user.username }}</span>
+            <span class="border border-primary rounded btn"><a href="{% url 'logout' %}">Wyloguj mi się</a></span>
             {% else %}
-            <p>Jesteś niezalogany</p>
-            <p><a href="{% url 'login' %}">Zaloguj się</a></p>
-            <p><a href="{% url 'register' %}">Załóż konto</a></p>
+            <span>Jesteś niezalogany</span>
+            <span class="border border-primary rounded btn"><a href="{% url 'login' %}">Zaloguj się</a></span>
+            <span class="border border-primary rounded btn"><a href="{% url 'register' %}">Załóż konto</a></span>
             {% endif %}
         </div>
     </div>
-{% block content %}
-Kru Kru Kru
-{% endblock %}
+    <div class="row border">
+    {% block content %}
+    Kru Kru Kru
+    {% endblock %}
+    </div>
     </div>
 </body>
 </html>

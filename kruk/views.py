@@ -28,7 +28,8 @@ class MainInaczej(ListView):
     """Widok listy z użyciem ListView"""
     model = Kruk
     ordering = ['-creation_date']
-
+    paginate_by = 15
+    context_object_name = 'lista_krukow'
 
 class KrukView(DetailView):
     """Widok szczegółowy tweeta"""
