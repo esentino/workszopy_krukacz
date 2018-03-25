@@ -10,3 +10,10 @@ class Kruk(models.Model):
     creation_date = models.DateTimeField(default=now)
     krukacz = models.ForeignKey(User, on_delete=models.CASCADE)
 
+
+class KrukComment(models.Model):
+    content = models.CharField(max_length=60)
+    creation_date = models.DateTimeField(default=now)
+    kruk = models.ForeignKey(Kruk, on_delete=models.SET_NULL, null=True)
+    """Komentarze użytkownika zostają tak długo jak żyje użytkownik"""
+    krukacz = models.ForeignKey(User, on_delete=models.CASCADE)

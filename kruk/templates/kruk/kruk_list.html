@@ -9,12 +9,14 @@
     <th>Treść</th>
     <th>Author</th>
     <th>Kiedy</th>
+    <th>Liczba komentarzy</th>
     </thead>
 {% for kruk in lista_krukow %}
     <tr>
         <td><a href="{% url 'detail' kruk.id %}">{{ kruk.content }}</a></td>
         <td>{{ kruk.krukacz.username }}</td>
         <td>{{ kruk.creation_date }}</td>
+        <td>{{ kruk.krukcomment_set.count }}</td>
     </tr>
 {% endfor %}
 </table>

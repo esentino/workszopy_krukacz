@@ -1,8 +1,26 @@
 {% extends 'kruk/base.html' %}
 {% block content %}
+<div clas="col-12">
+    <p>Treść: {{ object.content }}</p>
+    <p>Autor: {{ object.krukacz.username }}</p>
+    <p>Kiedy: {{ object.creation_date }}</p>
+</div>
+<div class="col-12">
+    <ul>
+        {% for comment in object.krukcomment_set.all %}
+        <li>
+        <p>
+            Treść; {{ comment.content }}
+            Kto: {{ comment.krukacz.username }}
+            Kiedy: {{ comment.creation_date }}
+        </p>
+        </li>
+        {% empty %}
+        </li>Brak komentarzy napisz pierwszy :)</li>
+        {% endfor%}
+    </ul>
+    <a class="border border-primary rounded btn" href="{% url 'add-comment' object.pk %}">Dodaj komentarz</a>
 
-        <p>{{ object.content }}</p>
-        <p>{{ object.krukacz.username }}</p>
-        <p>{{ object.creation_date }}</p>
+</div>
 
 {% endblock %}

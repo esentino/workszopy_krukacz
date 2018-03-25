@@ -15,17 +15,18 @@ Including another URLconf
 """
 from django.urls import path
 from django.conf.urls import url
-from kruk.views import(
+from kruk.views import (
     AddKrukView,
     KrukView,
     MainInaczej,
-    RegisterView
-)
+    RegisterView,
+    AddKrukCommentView)
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     url('^$', MainInaczej.as_view(), name="main"),
     path('kruk/<int:pk>', KrukView.as_view(), name="detail"),
+    path('kruk/<int:pk>/add', AddKrukCommentView.as_view(), name="add-comment"),
     url(r'^login/$', auth_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, name='logout'),
     url(r'^register$', RegisterView.as_view(), name='register'),

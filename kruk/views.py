@@ -1,12 +1,12 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.shortcuts import render, get_object_or_404
+from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, FormView, ListView, DetailView
 from django.views.generic.base import View
 
-from .forms import AddKrukForm
-from .models import Kruk
+from .forms import AddKrukForm, AddKrukCommentForm
+from .models import Kruk, KrukComment
 
 
 class RegisterView(CreateView):
@@ -49,3 +49,21 @@ class AddKrukView(LoginRequiredMixin, FormView):
         )
         return super(AddKrukView, self).form_valid(form)
 
+class AddKrukCommentView(LoginRequiredMixin, FormView):
+    form_class = AddKrukCommentForm
+    template_name = "kruk/add_kruk.html"
+    success_url = reverse_lazy('main')
+
+    def form_valid(self, form):
+        content = form.cleaned_data['content']
+        kruk_pk = self.kwargs.get('pk', None)
+        if kruk_pk is not None:
+            kruk = get_object_or_404(Kruk, pk=kruk_pk)
+            KrukComment.objects.create(
+                content=content,
+                krukacz=self.request.user,
+                kruk=kruk
+            )
+            self.success_url = reverse('detail', args=[kruk_pk])
+            return super(AddKrukCommentView, self).form_valid(form)
+        return super(AddKrukCommentView, self).form_invalid(form)
