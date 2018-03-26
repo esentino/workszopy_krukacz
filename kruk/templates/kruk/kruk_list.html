@@ -14,7 +14,7 @@
 {% for kruk in lista_krukow %}
     <tr>
         <td><a href="{% url 'detail' kruk.id %}">{{ kruk.content }}</a></td>
-        <td>{{ kruk.krukacz.username }}</td>
+        <td><a href="{% url 'krukacz' kruk.krukacz.pk %}">{{ kruk.krukacz.username }}</a></td>
         <td>{{ kruk.creation_date }}</td>
         <td>{{ kruk.krukcomment_set.count }}</td>
     </tr>

@@ -1,12 +1,14 @@
+from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, get_object_or_404
-from django.urls import reverse_lazy, reverse
+from django.contrib.auth.models import User
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse_lazy, reverse, resolve
 from django.views.generic import CreateView, FormView, ListView, DetailView
 from django.views.generic.base import View
 
 from .forms import AddKrukForm, AddKrukCommentForm
-from .models import Kruk, KrukComment
+from .models import Kruk, KrukComment, Observer
 
 
 class RegisterView(CreateView):
@@ -67,3 +69,19 @@ class AddKrukCommentView(LoginRequiredMixin, FormView):
             self.success_url = reverse('detail', args=[kruk_pk])
             return super(AddKrukCommentView, self).form_valid(form)
         return super(AddKrukCommentView, self).form_invalid(form)
+
+class KrukaczView(LoginRequiredMixin, DetailView):
+    model=User
+    context_object_name = 'user_object'
+
+class AddObserveView(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        if request.user.pk != pk:
+            user_to_observe = get_object_or_404(User, pk=pk)
+            observer, created = Observer.objects.get_or_create(krukacz=request.user)
+            observer.observed_krukacz.add(user_to_observe)
+            observer.save()
+            return redirect(reverse('krukacz', args=[pk]))
+        else:
+            messages.error(request, 'Nie możesz obserwować samego siebie')
+            return redirect(reverse('krukacz', args=[pk]))

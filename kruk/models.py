@@ -17,3 +17,8 @@ class KrukComment(models.Model):
     kruk = models.ForeignKey(Kruk, on_delete=models.SET_NULL, null=True)
     """Komentarze użytkownika zostają tak długo jak żyje użytkownik"""
     krukacz = models.ForeignKey(User, on_delete=models.CASCADE)
+
+class Observer(models.Model):
+    krukacz = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    observed_krukacz = models.ManyToManyField(User, related_name='observed_krukacz')
+

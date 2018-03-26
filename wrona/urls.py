@@ -20,7 +20,7 @@ from kruk.views import (
     KrukView,
     MainInaczej,
     RegisterView,
-    AddKrukCommentView)
+    AddKrukCommentView, KrukaczView, AddObserveView)
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -31,4 +31,6 @@ urlpatterns = [
     url(r'^logout/$', auth_views.logout, name='logout'),
     url(r'^register$', RegisterView.as_view(), name='register'),
     url('^add_kruk', AddKrukView.as_view(), name='add-kruk'),
+    path('krukacz/<int:pk>', KrukaczView.as_view(), name="krukacz"),
+    path('krukacz/observe/<int:pk>', AddObserveView.as_view(), name="observe"),
 ]
